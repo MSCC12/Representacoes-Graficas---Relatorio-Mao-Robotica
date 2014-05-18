@@ -19,7 +19,7 @@ Joana Castro
 Para aquisição do sinal pretendido e anteriormente enunciado, procedeu-se à execução dos passos cuja descrição é apresentada seguidamente.
 
 
-### Primeiro passo (Step 1) - Primeiro sinal adquirido (First sinal recorded)
+### Step 1 - Primeiro sinal adquirido (First sinal recorded)
 
 O primeiro sinal adquirido, disponibilizado através do link que se segue abaixo.
 
@@ -28,7 +28,7 @@ https://cloud.githubusercontent.com/assets/7483292/2949655/214d5e30-da11-11e3-9d
 Considerando, através de uma primeira análise, que os dados obtidos são compatíveis com o tratamento necessário para aplicação no desenvolvimento do projecto em discussão, não se procederam a mais aquisições de sinal, tendo-se iniciado então o processamento do mesmo.
 
 
-### Segundo passo (Step 2) - Sinal Melhorado (Improved signal)
+### Step 2 - Sinal Melhorado (Improved signal)
 
 Para melhoramento do sinal originalmente obtido, isto é, para supressão da interferência de fontes de ruído, procedeu-se à implementação dos seguintes passos:
 - Implementação de um filtro Notch, para remoção do ruído associado à ligação do sistema de aquisição à rede eléctrica nacional (banda de remoção de frequências entre os 49,5 Hz e os 50,5 Hz);
@@ -40,7 +40,7 @@ As representações das três implementações consecutivas dos filtros anterior
 https://cloud.githubusercontent.com/assets/7483292/2949636/f76fafbe-da10-11e3-960d-d0ba109a0a14.jpeg
 
 
-### Terceiro passo (Step 3) - Definição dos passos a implementar para processamento do sinal (Defining the signal processing stages)
+### Step 3 - Definição dos passos a implementar para processamento do sinal (Defining the signal processing stages)
 
 Para processamento do sinal adquirido, foram aplicadas ferramentas para:
 - Análise estatística do sinal (valor máximo, médio, mínimo e desvio padrão do sinal);
@@ -48,7 +48,7 @@ Para processamento do sinal adquirido, foram aplicadas ferramentas para:
 - Análise do início da contracção muscular (determinação do momento de ocorrência do primeiro pico registado no sinal)
 - Análise em frequência (determinação da taxa de amostragem e histograma de frequências do sinal)
 
-### Quarto passo (Step 4) - Código de processamento
+### Step 4 - Código de processamento
 
 O código aplicado no processamento de sinal consta do exemplo abaixo apresentado.
 
@@ -58,8 +58,6 @@ from scipy import signal
 from numpy import array, clip, argsort, sort
 from pylab import find
 from scipy.signal import argrelmax
-
-""" Representaçao Grafica do Sinal Original """
 
 data = loadtxt('EMG_mao_robotica.txt')
 
@@ -95,7 +93,6 @@ show()
 """savefig('EMG_Mão_Robótica_Sinal_Original.jpg')"""
 
 
-"""Processamento do Sinal"""
 sinal=EMGmv
 fs=1000.0
 order=2
@@ -138,7 +135,6 @@ ylabel('Tensao(mV)')
 
 """savefig('EMG_Mão_Robótica_Sinal_Melhorado.jpg')"""
 
-# Rectificação do sinal
 s4=abs(s3)
 subplot(4,1,4)
 plot(t,s4)
@@ -148,15 +144,12 @@ title('Sinal Rectificado')
 xlabel('Tempo(s)')
 ylabel('Tensao(mV)')
 
-
-# Análise estatística do sinal(máximo, mínimo, média e desvio padrão)
 print "Descrição estatística do sinal filtrado:\n"
 print "- Valor máximo do sinal filtrado: " + str(max(s4))
 print "- Valor mínimo do sinal filtrado: " + str(min(s4))
 print "- Desvio padrão do sinal filtrado: " + str(std(s4))
 print "- Valor médio do sinal filtrado: " + str(mean(s4)) + "\n"
 
-# Análise de amplitude
 amplitude_pp=(max(s4)-min(s4))
 
 print "Análise de amplitude do sinal filtrado:\n"
@@ -193,12 +186,10 @@ print " Valor mínimo de amplitude pico a pico sinal filtrado: " + str(amp_min) 
 contracao=t[peaks(s4, tol=None)[1]]
 print "- Momento, em ms, em se iniciou a contracçao muscular " + str(contracao) + "\n"
 
-# Análise em frequência
-# Taxa de amostragem do sinal
 taxaAmostragem= mean(1/diff(t))
 print "- Taxa de amostragem do sinal (Hz):" + str(taxaAmostragem) + "\n"
 
-# Histograma do sinal
+
 figure()
 hist(s4,100,orientation='vertical')
 title('Histograma de frequências')
@@ -206,6 +197,6 @@ xlabel('Frequências')
 show()
 
 
-### Quinto passo (Step 5) - Conclusões (Conclusions)
+### Step 5 - Conclusões (Final considerations)
 
-Através da realização do presente trabalho, foi possível a compreensão da necessidade da aplicação de ferramentas de processamento específicas ao processamento de sinal electromiográfico para que assim seja possível a extracção de informação pertinente que permita a avaliação dos processos de contracção, relaxamento e fatiga muscular, e respectivas diferenças, em indivíduos saudáveis ou afectados por patologias do foro muscular, ou entre outras características cuja relação se pretenda estabelecer entre as mesmas e os processos anteriormente mencionados.
+Através da realização do presente trabalho, foi possível a compreensão da necessidade da aplicação de ferramentas de processamento específicas ao processamento de sinal electromiográfico para que assim seja possível a extracção de informação pertinente que permita a avaliação dos processos de contracção, relaxamento e fatiga muscular, e respectivas diferenças, em indivíduos saudáveis ou afectados por patologias do foro muscular, ou entre outras características cuja relação se pretenda estabelecer entre as mesmas e os processos anteriormente mencionados. 
